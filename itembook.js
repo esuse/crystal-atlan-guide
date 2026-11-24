@@ -8,6 +8,8 @@ const itemCategories={
   pack:'Сундуки и наборы',stone:'Камни',circuit:'Модули',
   collection:'Коллекция',book:'Книги и записки',other:'Прочие'
 };
+const repeatedLooks=new Set([319424, 319425, 361616, 361617, 361618, 361783, 362167]);
+const lookCategories=new Set(["avatar", "collection", "emote", "frame", "outfit", "record", "sticker", "title", "transport"]);
 const itemShortlists={
   itemupgrade:{
     title:'Предметы для прокачки',
@@ -18,7 +20,7 @@ const itemShortlists={
   itemlooks:{
     title:'Коллекция и облики',
     lead:'Аватары, рамки, костюмы и другие предметы для оформления и коллекций.',
-    includes:row=>['avatar','frame','outfit','title','transport','collection','emote','sticker','record'].includes(row[2])
+    includes:row=>lookCategories.has(row[2])&&!repeatedLooks.has(row[0])
   }
 };
 let itemBookRequest;
@@ -122,7 +124,12 @@ function itemBookCard([id,name,type,description,icon,tags,destination,portraits,
   title.append(gearNode('span',name,'item-book-name'),gearNode('small',tags||itemCategories[type]));
   if(source)title.append(gearNode('small','Где взять: '+source[0],'item-book-source'));
   else if(offers?.length)title.append(gearNode('small','Обмен: '+offers[0][2],'item-book-source'));
-  summary.append(itemBookImage(portraits?.[0][0]||icon,44),title);
+  else if(details?.ways?.length||packs?.length)title.append(gearNode('small','Где взять: '+(details?.ways?.[0]?.[1]||packs[0][1]),'item-book-source'));
+  else if(lookCategories.has(type))title.append(gearNode('small','Где взять: источник не подтверждён','item-book-source'));
+  const preview=portraits?.[0][0]||icon;
+  if(preview)summary.append(itemBookImage(preview,44));
+  else summary.classList.add('without-item-icon');
+  summary.append(title);
   const body=gearNode('div',null,'nx-choice-body');
   if(description)body.append(itemBookDescription(description,rewards));
   if(offers?.length)body.append(itemBookTrade(offers));
@@ -143,9 +150,6 @@ function itemBookCard([id,name,type,description,icon,tags,destination,portraits,
   }
   if(source||details||packs?.length)body.append(itemBookWays(source,details,packs));
   if(destination)body.append(skillBookLink('Открыть в снаряжении',destination));
-  const link=skillBookLink('Ссылка на предмет','#itembook/'+id);
-  link.className='item-book-permalink';
-  body.append(link);
   card.append(summary,body);
   return card;
 }
@@ -174,7 +178,7 @@ function mountItemBook(view,catalog,page){
     }
   }
   if(!itemBookRequest){
-    itemBookRequest=fetch('data/items.json').then(response=>{
+    itemBookRequest=fetch('data/items.json?v=ru-review1').then(response=>{
       if(!response.ok)throw new Error(String(response.status));
       return response.json();
     }).catch(error=>{itemBookRequest=null;throw error;});
@@ -243,14 +247,15 @@ function mountItemBook(view,catalog,page){
       const heading=gearNode('h2',itemCategories[id]);
       heading.append(gearNode('span',String(items.length),'item-book-count'));
       header.append(heading);
-      if(!active&&items.length>4){
-        const button=gearNode('button','Смотреть все','skill-copy');
+      if(!active&&items.length>1){
+        section.dataset.previewCount=items.length;
+        const button=gearNode('button','Смотреть все','skill-copy item-book-show-all');
         button.type='button';
         button.setAttribute('aria-label','Смотреть все: '+itemCategories[id]);
         button.addEventListener('click',()=>choose(id,true));
         header.append(button);
       }
-      grid=gearNode('div',null,'item-book-grid');
+      grid=gearNode('div',null,active?'item-book-grid':'item-book-grid item-book-grid-preview');
       section.append(header,grid);
       list.append(section);
     }
@@ -279,7 +284,7 @@ function mountItemBook(view,catalog,page){
           appendMore();
           return;
         }
-        for(const row of items.slice(0,4))grid.append(itemBookCard(row,classes,rewardPacks.get(row[0])));
+        for(const row of items.slice(0,3))grid.append(itemBookCard(row,classes,rewardPacks.get(row[0])));
       }
       status.textContent=total?'Предметов: '+total:'По запросу ничего не найдено.';
     }

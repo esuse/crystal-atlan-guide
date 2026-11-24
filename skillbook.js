@@ -32,7 +32,7 @@ function skillBookFilter(s){
   return s.toLocaleLowerCase('ru').replaceAll('ё','е').trim();
 }
 
-function skillReference(row, rows, slug){
+function skillReference(row){
   const card=skillElement('details',undefined,'nx-choice skill-reference');
   card.id='skill-ref-'+row.id;
   const title=skillElement('summary');
@@ -55,17 +55,6 @@ function skillReference(row, rows, slug){
     pvp.append(skillElement('strong','PvP'),skillElement('p',row.pvpRu,'skill-description'));
     body.append(pvp);
   }
-  const copy=skillElement('button','Скопировать ссылку','skill-copy');
-  copy.type='button';
-  copy.addEventListener('click',async()=>{
-    try{
-      await navigator.clipboard.writeText(new URL(skillBookUrl(slug,row.id),location.href));
-      copy.textContent='Ссылка скопирована';
-    }catch{
-      location.hash=skillBookUrl(slug,row.id);
-    }
-  });
-  body.append(copy);
   card.append(title,body);
   return card;
 }
@@ -104,7 +93,7 @@ function mountSkillBook(view, catalog){
     if(!list.isConnected)return;
     const cards=rows.map(row=>{
       const words=skillBookFilter([row.ru,row.type].filter(Boolean).join(' '));
-      return {row,words,element:skillReference(row,rows,slug)};
+      return {row,words,element:skillReference(row)};
     });
     list.append(...cards.map(card=>card.element));
     function filter(){

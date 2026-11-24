@@ -204,33 +204,6 @@ nav.tabs .res{position:absolute;left:0;right:0;top:100%;max-height:min(70vh,560p
   nav.tabs .grp a .cnt{display:none}
   nav.tabs .search{flex-basis:100%}
 }
-/* ---- sidebar accordion ---- */
-nav.tabs .acc{display:none}
-@media (min-width:1100px){
-  .wrap{max-width:1360px;display:grid;grid-template-columns:270px minmax(0,1fr);column-gap:28px;align-items:start}
-  header.top{grid-column:2;grid-row:1}
-  nav.tabs{grid-column:1;grid-row:1 / span 4;position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:10px;margin:0;box-shadow:none}
-  main#view{grid-column:2;grid-row:2;min-width:0}
-  .wrap > .foot{grid-column:2}
-  nav.tabs .grp,nav.tabs .sub{display:none!important}
-  nav.tabs .bar{display:block}
-  nav.tabs .search{min-width:0}
-  nav.tabs .acc{display:grid;gap:6px;margin-top:10px}
-  .ag .ah{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;font:700 15px var(--f-body);color:var(--fg);background:color-mix(in srgb,var(--gc) 14%,var(--panel));box-shadow:inset 3px 0 0 var(--gc)}
-  .ag .ah:hover,.ag .ah:focus-visible{background:color-mix(in srgb,var(--gc) 26%,var(--panel))}
-  .ag .ah svg{width:18px;height:18px;flex:none;fill:none;stroke:var(--gc);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .ag .ah span{flex:1}
-  .ag .ah i{font:600 11px var(--f-mono);font-style:normal;color:var(--gc)}
-  .ag .ah .chev{transition:transform .15s;color:var(--muted)}
-  .ag.open .ah .chev{transform:rotate(180deg)}
-  .ag .al{display:none;padding:4px 0 6px 10px;border-left:2px solid color-mix(in srgb,var(--gc) 50%,transparent);margin:4px 0 0 12px}
-  .ag.open .al{display:grid;gap:2px}
-  .ag .al a{display:block;padding:7px 10px;border-radius:8px;text-decoration:none;color:var(--muted);font:600 14px/1.3 var(--f-body)}
-  .ag .al a:hover{color:var(--fg);background:var(--panel2)}
-  .ag .al a.on{color:var(--fg);background:color-mix(in srgb,var(--dc) 22%,var(--panel2));box-shadow:inset 3px 0 0 var(--dc)}
-  nav.tabs{max-height:calc(100vh - 24px)}
-  nav.tabs .res{position:fixed;left:300px;right:auto;width:min(560px,60vw);top:16px}
-}
 /* ---- section cards ---- */
 .flow{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));grid-auto-rows:1fr;align-items:stretch;gap:8px;margin:0 0 20px!important;padding:0!important;overflow:visible!important}
 .flow .arr{display:none}
@@ -338,7 +311,6 @@ header.top .sub{margin:8px auto 0;font-size:14px}
 
 /* Вступление, оглавление и разделы статей */
 .wiki-hero{display:grid;gap:26px;align-items:start;margin:0 0 30px;border-bottom:1px solid var(--line)}
-.wiki-hero:has(.wiki-outline){grid-template-columns:minmax(0,1fr) minmax(210px,27%)}
 .wiki-intro{min-width:0}
 .wiki-intro-top{display:flex;align-items:center;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;margin-bottom:14px}
 .wiki-category{display:inline-flex;align-items:center;gap:9px;color:var(--masthead-accent);font:700 13px/1.4 var(--f-body);letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
@@ -460,9 +432,9 @@ header.top .sub{margin:8px auto 0;font-size:14px}
 #item-book-list{display:grid;gap:1.5rem}
 #view:has(.item-book-layout){max-width:none}
 .wrap:has(.item-book-layout){max-width:1200px}
-.item-book-layout{display:grid;grid-template-columns:clamp(170px,19vw,220px) minmax(0,1fr);align-items:start;gap:clamp(16px,2.4vw,28px)}
-.item-book-main{min-width:0;scroll-margin-top:calc(var(--masthead-height,70px) + 12px)}
-.item-book-sidebar{position:sticky;top:calc(var(--masthead-height,70px) + 12px);min-width:0;max-height:calc(100dvh - var(--masthead-height,70px) - 24px);display:flex;flex-direction:column;padding:.55rem;border:1px solid var(--line);border-radius:7px;background:var(--panel)}
+:is(.item-book-layout,:where(#wiki-layout).has-wiki-rail){display:grid;grid-template-columns:clamp(170px,19vw,220px) minmax(0,1fr);align-items:start;gap:clamp(16px,2.4vw,28px)}
+.item-book-main{min-width:0;container:item-results / inline-size;scroll-margin-top:calc(var(--masthead-height,70px) + 12px)}
+:is(.item-book-sidebar,:where(#wiki-rail):not([hidden])){position:sticky;top:calc(var(--masthead-height,70px) + 12px);min-width:0;max-height:calc(100dvh - var(--masthead-height,70px) - 24px);display:flex;flex-direction:column;padding:.55rem;border:1px solid var(--line);border-radius:7px;background:var(--panel)}
 #view .item-book-sidebar h2{font-size:1rem;font-weight:700;text-align:left;margin:0;padding:.35rem .45rem .55rem}
 #item-book-category{display:grid;gap:2px;overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain}
 .item-book-chip{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:.45rem;width:100%;min-height:36px;padding:.35rem .45rem;border:1px solid transparent;border-radius:5px;color:var(--fg);background:transparent;font:inherit;font-size:.875rem;text-align:left;overflow-wrap:anywhere;cursor:pointer}
@@ -474,6 +446,18 @@ header.top .sub{margin:8px auto 0;font-size:14px}
 #view .item-book-group-head h2{display:flex;align-items:baseline;gap:.6rem;margin:0;font-size:1.25rem}
 .item-book-group-head .skill-copy{margin:0}
 .item-book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,16rem),1fr));align-items:start;gap:.65rem}
+@container item-results (width < 49.3rem){
+  .item-book-grid-preview>.item-book-card:nth-child(n+3){display:none}
+}
+@container item-results (width < 32.65rem){
+  .item-book-grid-preview>.item-book-card:nth-child(n+2){display:none}
+}
+@container item-results (width >= 32.65rem){
+  [data-preview-count="2"] .item-book-show-all{display:none}
+}
+@container item-results (width >= 49.3rem){
+  [data-preview-count="3"] .item-book-show-all{display:none}
+}
 .item-nav a:nth-child(2){margin-inline-start:.6rem}
 .item-nav a:nth-child(2)::before{content:"";position:absolute;inset-block:.55rem;inset-inline-start:-.46rem;border-inline-start:1px solid var(--line)}
 .item-nav a{position:relative}
@@ -485,6 +469,7 @@ header.top .sub{margin:8px auto 0;font-size:14px}
 .item-book-inventory{display:flex;align-items:center;gap:.5rem;color:var(--muted);font-size:.875rem}
 .item-book-card{scroll-margin-top:calc(var(--masthead-height,70px) + 16px)}
 .item-book-card>summary{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:.65rem;box-sizing:border-box}
+.item-book-card>summary.without-item-icon{grid-template-columns:minmax(0,1fr)}
 .item-book-card>summary::after{top:14px}
 .item-book-card>summary img{object-fit:contain;border:1px solid var(--line);border-radius:5px}
 .item-book-title{display:grid;gap:.2rem;min-width:0;overflow-wrap:anywhere}
@@ -592,12 +577,11 @@ body::before{display:none}
 .masthead nav.tabs .wiki-brand{display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;justify-self:start;min-height:48px;padding:0 4px;border:0;border-radius:4px;background:none;color:var(--fg);font:italic 600 clamp(15px,1.7vw,21px)/1.2 "Exo 2",var(--f-body);text-transform:uppercase;letter-spacing:.11em;white-space:nowrap}
 .masthead nav.tabs .wiki-brand:hover{color:var(--accent)}
 .wiki-brand small{color:var(--muted);font:600 12px/1.05 var(--f-body);letter-spacing:.06em;text-transform:none}
-.nav-primary{display:flex;align-items:stretch;gap:4px;min-width:0}
-nav.tabs .grp{display:flex!important;flex:0 1 auto;flex-wrap:nowrap;min-width:0;width:auto;gap:2px;background:none;padding:0;border:0;border-radius:0;overflow-x:auto;scrollbar-width:none}
-nav.tabs .grp::-webkit-scrollbar{display:none}
-nav.tabs .grp a,#nav-more summary{display:flex;flex:none;flex-direction:row;align-items:center;justify-content:center;min-height:56px;padding:0 9px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--muted);box-shadow:none;white-space:nowrap;font:600 14px/1 var(--f-body);text-decoration:none;cursor:pointer}
-nav.tabs .grp a:is(:hover,.on),#nav-more:is(.on,[open]) summary,#nav-more summary:hover{color:var(--fg);background:var(--accent-soft);box-shadow:none}
-nav.tabs .grp a.on,#nav-more.on summary{border-bottom-color:var(--masthead-accent)}
+.nav-primary{display:flex;align-items:stretch;flex-wrap:wrap;column-gap:2px;min-width:0}
+nav.tabs .grp{display:contents}
+nav.tabs .grp a,nav.tabs .nav-calculators,#nav-more summary{display:flex;flex:none;flex-direction:row;align-items:center;justify-content:center;min-height:56px;padding:0 9px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--muted);box-shadow:none;white-space:nowrap;font:600 14px/1 var(--f-body);text-decoration:none;cursor:pointer}
+nav.tabs :is(.grp a,.nav-calculators):is(:hover,.on),#nav-more:is(.on,[open]) summary,#nav-more summary:hover{color:var(--fg);background:var(--accent-soft);box-shadow:none}
+nav.tabs :is(.grp a,.nav-calculators).on,#nav-more.on summary{border-bottom-color:var(--masthead-accent)}
 #nav-more{flex:none}
 #nav-more summary::after{content:'▾';margin-left:5px;color:var(--masthead-accent)}
 #nav-more summary::-webkit-details-marker{display:none}
@@ -621,14 +605,21 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
 .article-navigation a:is(:hover,.on){background:var(--accent-soft);color:var(--fg)}
 .article-navigation a.on{box-shadow:inset 0 -2px var(--masthead-accent)}
 #view .wiki-hero{padding-block:16px 24px}
-@media(min-width:901px) and (max-width:1050px){.masthead nav.tabs{grid-template-columns:auto minmax(0,1fr) minmax(165px,210px) auto;gap:10px;padding-inline:14px}nav.tabs .grp a,#nav-more summary{padding-inline:7px;font-size:13px}}
+@media(min-width:901px){
+  .masthead nav.tabs{grid-template-columns:minmax(0,1fr) minmax(170px,250px) auto;grid-template-areas:"brand search tools" "nav nav nav";gap:0 10px;padding-inline:14px}
+  .masthead .wiki-brand{grid-area:brand}
+  .masthead .search{grid-area:search}
+  .masthead .nav-tools{grid-area:tools}
+  .masthead .nav-primary{grid-area:nav}
+  nav.tabs .grp a,nav.tabs .nav-calculators,#nav-more summary{min-height:44px}
+}
 @media(max-width:900px){
  .masthead nav.tabs{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand tools" "nav nav";gap:0 8px;padding:0 12px}
  .wiki-brand{grid-area:brand}
  .nav-primary{grid-area:nav}
  .nav-tools{grid-area:tools}
  #mobile-search{display:grid}
- nav.tabs .grp a,#nav-more summary{min-height:44px;padding-inline:8px;font-size:13px}
+ nav.tabs .grp a,nav.tabs .nav-calculators,#nav-more summary{min-height:44px;padding-inline:8px;font-size:13px}
  nav.tabs .search{display:none;position:absolute;inset:100% 0 auto;padding:10px 12px;background:var(--panel);border-bottom:1px solid var(--line)}
  nav.tabs.search-open .search{display:block}
  nav.tabs .search input{min-height:44px;font-size:16px}
@@ -648,14 +639,17 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
   .masthead nav.tabs{padding-inline:max(8px,env(safe-area-inset-left)) max(8px,env(safe-area-inset-right))}
   .wrap{padding-inline:max(12px,env(safe-area-inset-left)) max(12px,env(safe-area-inset-right))}
   .nav-primary{justify-content:center;gap:0}
-  nav.tabs .grp{gap:0}
   #nav-more-links{inset:100% 8px auto;width:auto;max-height:65dvh}
   nav.tabs .res{max-height:clamp(96px,calc(var(--available-height,100dvh) - var(--masthead-height) - 78px),50dvh);overscroll-behavior:contain}
+}
+@media(max-width:720px){
   #article-menu{margin:10px 0 12px;border:1px solid var(--line);border-radius:7px;background:var(--panel)}
   #article-menu > summary{display:flex;align-items:center;gap:8px;min-height:44px;padding:6px 10px;cursor:pointer;list-style:none}
   #article-current{font-size:15px;font-weight:700;min-width:0;overflow-wrap:anywhere}
   .article-menu-label{margin-left:auto;white-space:nowrap;color:var(--muted);font:600 12px/1.2 var(--f-body)}
-  #article-menu .article-navigation{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin:0;padding:6px;border:0;border-top:1px solid var(--line);overflow:visible}
+  #article-menu[open] #article-menu-pane{position:fixed;z-index:20;inset-inline-start:0;top:calc(var(--masthead-height) + 60px);display:grid;grid-template-columns:minmax(0,1fr);gap:4px;width:min(84vw,320px);max-height:calc(100dvh - var(--masthead-height) - 72px);margin:0;padding:8px;overflow:auto;overscroll-behavior:contain;border:1px solid var(--line);border-radius:0 8px 8px 0;background:var(--panel);box-shadow:0 12px 24px #0005}
+  #article-menu-pane .section-menu-title{display:block;padding:.35rem .45rem .55rem;margin:0;font-weight:700}
+  #article-menu-pane .article-navigation{display:grid;gap:2px;overflow:visible;margin:0;padding:0;border:0}
   #article-menu .article-navigation a{padding:4px 8px;white-space:normal;overflow-wrap:anywhere;font-size:14px}
   #article-menu .article-navigation a[aria-current="page"]{color:var(--fg);background:var(--accent-soft)}
 }
@@ -691,17 +685,49 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
   #lb.zoomed #lbimg{width:100%;height:auto;max-height:none}
 }
 @media(max-width:440px){
-  nav.tabs .grp a,#nav-more summary{font-size:12px;padding-inline:4px}
+  nav.tabs .grp a,nav.tabs .nav-calculators,#nav-more summary{font-size:12px;padding-inline:4px}
 }
 @media(max-width:350px){
-  nav.tabs .grp a,#nav-more summary{font-size:11.5px;padding-inline:3px}
+  nav.tabs .grp a,nav.tabs .nav-calculators,#nav-more summary{font-size:11.5px;padding-inline:3px}
   #nav-more summary::after{margin-left:3px}
 }
+</style>
+<style>
+.wrap:has(#wiki-layout.has-wiki-rail){max-width:1200px}
+#wiki-rail{overflow:auto;overscroll-behavior:contain}
+#wiki-rail>*{flex-shrink:0}
+:is(#wiki-rail,.item-book-sidebar) .section-menu-title{display:block;margin:0;padding:.35rem .45rem .55rem;color:var(--fg);font-weight:700}
+.section-menu-title{display:none}
+:is(#wiki-rail,.item-book-sidebar) #article-menu>summary{display:none}
+:is(#wiki-rail,.item-book-sidebar) .article-navigation{display:grid;gap:2px;overflow:visible;border:0;margin:0;padding:0}
+:is(#wiki-rail,.item-book-sidebar) .article-navigation a{white-space:normal;min-height:38px;justify-content:start;text-align:left;overflow-wrap:anywhere}
+.item-book-sidebar #article-menu{margin:0 0 .65rem;padding-bottom:.65rem;border-bottom:1px solid var(--line)}
+#article-menu-pane .wiki-outline{margin-top:12px;padding-top:8px;border-top:1px solid var(--line)}
+#article-menu-pane .wiki-outline a{display:flex;align-items:center;min-height:38px;padding:6px 8px;overflow-wrap:anywhere;color:var(--fg);font-size:.875rem;text-decoration:none}
+#article-menu-pane .wiki-outline a:is(:hover,[aria-current="page"]){color:var(--accent);background:var(--accent-soft);border-radius:4px}
+#article-menu-pane .wiki-outline a:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.wiki-calculator{padding:16px;margin-bottom:24px;background:var(--panel);border:1px solid var(--line);border-radius:6px}
+.wiki-calculator h3{margin-top:0}
+.wiki-calculator label{display:grid;gap:4px;font-size:.875rem;min-width:0}
+.wiki-calculator :is(input,select,button){width:100%;min-width:0;min-height:42px;padding:6px 8px;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:4px;font:inherit}
+.wiki-calculator :is(button,input[type=checkbox]){width:auto}
+.wiki-calculator :is(button,select,input[type=checkbox]){cursor:pointer}
+.wiki-calculator [hidden]{display:none}
+.calc-settings,.calc-level,.calc-equipment,.calc-modifier{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr));gap:10px;align-items:end}
+.calc-level,.calc-modifier{margin:10px 0;padding:12px;border:1px solid var(--line);border-radius:4px}
+.calc-level>strong{grid-column:1/-1}
+.calc-result{display:block;margin:14px 0;padding:12px;background:var(--accent-soft);font-weight:700}
+.calc-note{color:var(--muted);font-size:.875rem}
+.calc-modifiers{margin-top:14px}
+.calc-stat-total>div{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line);padding:6px 0}
+.calc-stat-total dd{margin:0;white-space:nowrap}
+.calc-set-total small{display:block;color:var(--muted)}
+@media(max-width:720px){.wiki-calculator{padding:12px}.wiki-calculator :is(input,select,button){min-height:44px;font-size:16px}}
 </style>
 <header class="masthead">
   <nav class="tabs" id="nav" aria-label="Разделы вики">
     <a class="wiki-brand" href="#terms">Кристалл Атлана<small>Вики</small></a>
-    <div class="nav-primary"><div class="grp" id="grp"></div><details id="nav-more"><summary>Ещё</summary><div id="nav-more-links"></div></details></div>
+    <div class="nav-primary"><div class="grp" id="grp"></div><a class="nav-calculators" href="#calculators">Калькуляторы</a><details id="nav-more"><summary>Ещё</summary><div id="nav-more-links"></div></details></div>
     <div class="search" id="nav-search" role="search">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
       <input id="q" type="search" autocomplete="off" placeholder="Поиск по вики" aria-label="Поиск по вики" aria-controls="res">
@@ -714,11 +740,15 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
   </nav>
 </header>
 <div class="wrap">
-<details id="article-menu" open>
-  <summary><span id="article-current"></span><span class="article-menu-label">Статьи раздела</span></summary>
-  <nav class="article-navigation" id="sub" aria-label="Статьи раздела"></nav>
+<div id="article-menu-home"><details id="article-menu" open>
+  <summary><span id="article-current"></span><span class="article-menu-label">Оглавление</span></summary>
+  <div id="article-menu-pane">
+    <p class="section-menu-title">Статьи раздела</p>
+    <nav class="article-navigation" id="sub" aria-label="Статьи раздела"></nav>
+  </div>
 </details>
-<main id="view"></main>
+</div>
+<div id="wiki-layout"><aside id="wiki-rail" hidden></aside><main id="view"></main></div>
 <p class="foot">Автор гайда - <b>Ахинея</b>. Пометка «совет игроков» - опыт игроков; числа там могут отличаться от нашей версии.</p>
 </div>
 
@@ -730,10 +760,11 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
 
 <template id="t-basics">
   <h2>Новичку: прочитай один раз</h2>
+  <details class="wiki-outline" open><summary>На этой странице</summary><nav aria-label="На этой странице"><ul><li><a href="#basics/exp-reading">Как читать гайд</a></li><li><a href="#basics/exp-terms">Слова, которые встретятся</a></li><li><a href="#basics/exp-difficulty">Сложности</a></li><li><a href="#basics/exp-reliability">Надёжность снаряжения - сколько нужно</a></li><li><a href="#basics/sphere-paradox">Сфера парадокса</a></li><li><a href="#basics/exp-checklist">Перед каждым заходом</a></li><li><a href="#basics/exp-reset">Сброс</a></li></ul></nav></details>
   <p class="lead">Экспедиции открываются через <b>Tab → Экспедиции</b>. Энергию не тратят, награда - раз в неделю. Перед первым заходом игра показывает подсказки по боссам.</p>
-  <h3 class="sec">Как читать гайд</h3>
+  <h3 class="sec" id="exp-reading">Как читать гайд</h3>
   <div class="legend"><span><span class="tag w">ВАЙП</span> - не выполнил, умирает вся группа</span><span><span class="tag f">огонь</span> / <span class="tag i">лёд</span> - стихия атаки</span><span><span class="tag src">Наблюдение игроков</span> - с форумов, в подсказках игры нет</span></div>
-  <h3 class="sec">Слова, которые встретятся</h3>
+  <h3 class="sec" id="exp-terms">Слова, которые встретятся</h3>
   <dl class="gloss">
     <dt>Вайп</dt><dd>Вся группа умирает сразу. Почти всегда - наказание за невыполненную механику.</dd>
     <dt>Пробуждение (ульта)</dt><dd>Самое сильное умение. Часть щитов и бомб ломается <b>только им</b> или умением питомца - держи заряженным.</dd>
@@ -741,7 +772,7 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
     <dt>«Второе дыхание»</dt><dd>Выход из оглушения/захвата за энергию.</dd>
     <dt>Надёжность снаряжения</dt><dd>Показатель твоего снаряжения. У каждого босса экспедиции свой порог - он написан внизу окна экспедиции (например «1500 Надёжность снаряжения»). Ниже порога - по тебе в бою всё время идёт урон. Растёт от рейдового снаряжения и его улучшения.</dd>
   </dl>
-  <h3 class="sec">Сложности</h3>
+  <h3 class="sec" id="exp-difficulty">Сложности</h3>
   <div class="tbl"><table>
     <tr><th>Сложность</th><th>Игроков</th><th>Пропусков</th><th>Чем отличается</th></tr>
     <tr><td><b>Одиночный</b></td><td>1</td><td>меньше всего</td><td>Учебный режим, награда ниже. Порог надёжности как на сюжете.</td></tr>
@@ -750,7 +781,7 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
     <tr><td><b>Легендарный</b></td><td>4-8*</td><td>больше</td><td>Самый высокий порог и лучшая награда.</td></tr>
   </table></div>
   <p class="sub" style="margin:-8px 0 16px">* Исключения: Логово Воронова крыла - 2-4 игрока; Темница разума - героический и легендарный ровно 8; Литургия стужи - сюжет и героический ровно 4. Вход: одиночный 4 пропуска, сюжет 6, героический и легендарный 10. У каждого босса: ежедневная награда 1 раз, недельная - 3 раза.</p>
-  <h3 class="sec">Надёжность снаряжения - сколько нужно</h3>
+  <h3 class="sec" id="exp-reliability">Надёжность снаряжения - сколько нужно</h3>
   <p class="sub" style="margin:0 0 10px">Твоя надёжность должна быть не ниже числа - тогда пройдёшь всех боссов. Список идёт от лёгких к сложным.</p>
   <div class="tbl"><table>
     <tr><th>Экспедиция</th><th>Одиночный</th><th>Сюжет</th><th>Героический</th><th>Легендарный</th></tr>
@@ -767,7 +798,7 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
   </table></div>
   <h3 class="sec" id="sphere-paradox"><a class="item-heading" href="#itembook/310355"><img src="img/items/13059.webp" alt="" width="38" height="38" loading="lazy">Сфера парадокса</a></h3>
   <div class="callout tip"><b>Где получить:</b> «Темница разума» или «Литургия стужи» при наличии доступных наград. В описании предмета указаны сюжетная, героическая и легендарная сложности и условие: <b>боевая мощь не ниже 60 000</b>. Сфера позволяет выбрать один из предлагаемых предметов для быстрого прохождения экспедиций.</div>
-  <h3 class="sec">Перед каждым заходом</h3>
+  <h3 class="sec" id="exp-checklist">Перед каждым заходом</h3>
   <ol class="check">
     <li><div><b>Проверь надёжность снаряжения</b> - порог написан внизу окна экспедиции у каждого босса. Не хватает - бери сложность ниже.</div></li>
     <li><div><b>Еда:</b> +8% защиты, +8% атаки, еда на свою стихию. <b>Эликсир мастера</b> удваивает материалы.</div></li>
@@ -775,7 +806,7 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
     <li><div><b>Роли до боя:</b> кто водит, кто ломает, кто несёт. У каждого босса ниже есть «Кратко».</div></li>
     <li><div><b>Новый бой:</b> сначала соло, потом сюжет, потом легендарный.</div></li>
   </ol>
-  <h3 class="sec">Сброс</h3>
+  <h3 class="sec" id="exp-reset">Сброс</h3>
   <div class="tbl"><table>
     <tr><th>День</th><th>Экспедиции</th></tr>
     <tr><td><b>Понедельник</b></td><td>Королевский гамбит · Темница разума · Логово Воронова крыла · Сокрытое сердце</td></tr>
@@ -792,8 +823,9 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
 
 <template id="t-skillbook">
   <h2>Справочник умений</h2>
+  <details class="wiki-outline" open><summary>На этой странице</summary><nav aria-label="На этой странице"><ul><li><a href="#skillbook/skill-book-controls">Выбор класса и поиск</a></li><li><a href="#skillbook/skill-book-list">Умения</a></li></ul></nav></details>
   <p class="lead">Выбери класс или специализацию.</p>
-  <div class="skill-book-controls">
+  <div class="skill-book-controls" id="skill-book-controls">
     <div><label for="skill-book-class">Класс или специализация</label><select id="skill-book-class"></select></div>
     <div><label for="skill-book-search">Поиск по умениям</label><input id="skill-book-search" type="search" placeholder="Название или свойство"></div>
     <div><label for="skill-book-type">Тип умения</label><select id="skill-book-type"><option value="">Все типы</option><option>Боевое</option><option>Пассивное</option><option>Сверхспособность</option></select></div>
@@ -801,7 +833,7 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
   <p id="skill-book-status" role="status"></p>
   <div id="skill-book-list" class="steps"></div>
 </template>
-<script src="skillbook.js"></script>
+<script src="skillbook.js?v=card-links1"></script>
 <template id="t-gearbook">
   <h1>Комплекты и оружие</h1>
   <p class="lead">Снаряжение 75-го и 80-го уровней, бонусы комплектов и оружие по специализациям. <a href="#gear/b-where">Где добывать снаряжение</a></p>
@@ -811,13 +843,14 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
     </label>
     <a id="gear-book-class-skills" href="#skillbook" hidden>Умения специализации</a>
     <p>Пилигрим идёт первым как стартовый комплект. Выбор класса подбирает оружие и показывает советы по комплектам. Можно собрать любой комплект.</p>
+    <p><strong>Как мы подбираем экипировку.</strong> Рекомендации по классам основаны на внутриигровых описаниях умений, бонусов комплектов и эффектов оружия. Мы смотрим, какие бонусы сочетаются с механиками класса и насколько удобно активировать их в бою. Это общие рекомендации. Лучше самому проверить в бою, какие связки подходят твоей сборке и стилю игры.</p>
   </div>
-  <nav class="gear-tabs" aria-label="Разделы снаряжения">
-    <a href="#gearbook" data-gear-section="sets">Комплекты</a>
-    <a href="#gearbook/weapons" data-gear-section="weapons">Оружие</a>
-    <a href="#gearbook/craft" data-gear-section="craft">Оружие Абсолюта</a>
-    <a href="#gearbook/extra" data-gear-section="extra">Универсальные вещи</a>
-  </nav>
+  <details class="wiki-outline" open><summary>На этой странице</summary><nav aria-label="Разделы снаряжения"><ul>
+    <li><a href="#gearbook" data-gear-section="sets">Комплекты</a></li>
+    <li><a href="#gearbook/weapons" data-gear-section="weapons">Оружие</a></li>
+    <li><a href="#gearbook/craft" data-gear-section="craft">Оружие Абсолюта</a></li>
+    <li><a href="#gearbook/extra" data-gear-section="extra">Универсальные вещи</a></li>
+  </ul></nav></details>
   <div class="gear-book-controls">
     <label id="gear-book-kind-label">Тип комплекта
       <select id="gear-book-kind">
@@ -873,7 +906,34 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
     </div>
   </div>
 </template>
-<script src="itembook.js"></script>
+<template id="t-calculators">
+  <h2>Калькуляторы</h2>
+  <details class="wiki-outline" open><summary>На этой странице</summary><nav aria-label="Калькуляторы"><ul>
+    <li><a href="#calculators/calc-temper">Стоимость закалки</a></li>
+    <li><a href="#calculators/calc-stats">Характеристики персонажа</a></li>
+  </ul></nav></details>
+  <section id="calc-temper" class="wiki-calculator">
+    <h3>Стоимость закалки</h3>
+    <p>Укажи уровни и цены из окна закалки. Шанс можно изменить для каждой ступени. Для +15 и выше учтена <a href="#temper/s-t1-3">защита от неудач</a>.</p>
+    <div class="calc-settings"></div>
+    <output class="calc-result" aria-live="polite"></output>
+    <div class="calc-levels"></div>
+    <p class="calc-note">Бюджет рассчитан по среднему числу попыток с учётом откатов. Звёзды пробуждения, прочность и материалы можно учесть в цене попытки в пересчёте на золото.</p>
+  </section>
+  <section id="calc-stats" class="wiki-calculator">
+    <h3>Характеристики персонажа</h3>
+    <p>Выбери вещи из <a href="#gearbook">каталога снаряжения</a>. Впиши базовые статы и прибавки от закалки, арретиров, рун и других улучшений.</p>
+    <div class="calc-equipment"></div>
+    <div class="calc-modifiers"></div>
+    <button class="calc-add" type="button">Добавить характеристику</button>
+    <h4>Сумма характеристик</h4>
+    <dl class="calc-stat-total"></dl>
+    <section class="calc-sets" hidden><h4>Активные пороги комплектов</h4><ul class="calc-set-total"></ul></section>
+    <p class="calc-note">Проценты и единицы считаются отдельно. Для расчёта с выбранным бафом комплекта добавь его значения вручную. Условные эффекты в бою зависят от того, когда они срабатывают.</p>
+  </section>
+</template>
+<script src="itembook.js?v=ru-review1"></script>
+<script src="calculators.js?v=1"></script>
 <script>
 const S=(img,see,doo,fl,x)=>({img,see,do:doo,fl:fl||'',x});
 const P=(t,cls)=>({phase:t,cls:cls||''});
@@ -1039,6 +1099,7 @@ const EXP_E=[
   steps:[P('Фаза 1 · скован льдом','ice'),
    S('s302','Деус пробивает стены руками','Уклоняйся и <b>бей оковы кары на руках</b>. Заряженные оковы бьют копьём по самому Деусу.'),
    P('Фаза 2 · греховное пламя','fire'),
+   S(null,'Внизу у оков: на какие атаки смотреть','После спуска, пока бьёшь оковы, следи за тремя сигналами. <b>Красная линия</b> предупреждает о потоке лавы: уйди с линии, а если Деус целится в тебя, отведи поток от группы. <b>«Лавопад»</b> выглядит как огромный огненный шар: соберитесь, чтобы разделить урон. При <b>«Ударе греховного пламени»</b> займи хрупкую платформу до удара. На каждой платформе должен быть один игрок.','w'),
    S('s303','На руках новые группы оков','Ударил первые - <b>за 10 секунд активируй все остальные</b> в группе. Поделите оковы заранее.','w'),
    S('s304','Красная линия к игроку','Сейчас поток лавы по цели. Если цель ты - <b>отойди туда, где не заденет своих</b>.','f'),
    S('s305','«Лавопад» - огромный шар','<b>Соберитесь вместе</b>, урон делится. Поднимаются платформы - с них удобно бить оковы.','f'),
@@ -1252,6 +1313,7 @@ const EXP_P=[
 {id:'itembook',tab:'Все предметы',tpl:'t-itembook'},
 {id:'itemupgrade',tab:'Для прокачки',tpl:'t-itembook'},
 {id:'itemlooks',tab:'Коллекция и облики',tpl:'t-itembook'},
+{id:'calculators',tab:'Калькуляторы',title:'Калькуляторы',lead:'Средняя стоимость закалки и характеристики персонажа',tpl:'t-calculators'},
 {id:'gearbook',tab:'Комплекты и оружие',tpl:'t-gearbook'},
 {id:'gear',tab:'Снаряжение',title:'Снаряжение',
  chips:['эпики 75','вечные 80','авторазбор'],
@@ -1301,7 +1363,7 @@ const EXP_P=[
    S(null,'Что калибровать первым','То, что носишь долго: оружие и вещи 75-80. Вещи, которые скоро сменишь, не трогай.','s')]}]},
 {id:'temper',tab:'Закалка',title:'Закалка',
  chips:['до +10 - в рюкзаке','выше - у Мастера Гленна','до +25'],
- lead:'Закалка поднимает защиту, сопротивление и надёжность снаряжения. Самый большой рост силы. Только ПВЕ-снаряжение. <a href="#temper/b-t-spray">Напыление</a> даёт временный уровень закалки.',
+ lead:'Закалка поднимает защиту, сопротивление и надёжность снаряжения. Самый большой рост силы. Только ПВЕ-снаряжение. <a href="#temper/b-t-spray">Напыление</a> даёт временный уровень закалки. <a href="#calculators/calc-temper">Рассчитать стоимость закалки</a>. <a href="#currency/s-cur_gift-2">Где взять общий эскиз +14</a>.',
  bosses:[
  {id:'t1',name:'Как закаливать',who:'',must:['До +11 неудача ничего не отнимает','+11…+15: неудача −1 уровень','С +15: счётчик защиты - гарант на 7-й попытке'],
   steps:[S('p_temper','Окно закалки (у Мастера Гленна в Рейнсе)','До +10 - прямо из рюкзака. Выше - подойди к <b>Мастеру Гленну</b> (кнопка «Закалка» в меню вещи сама проложит путь). Внизу вещи, справа: статы до/после, материалы, <b>слот катализатора</b>, шанс, цена, «ЗАКАЛИТЬ».'),
@@ -1464,7 +1526,11 @@ const EXP_P=[
  {id:'cur_med',name:'Медали',who:'Обмен → Медали',must:['Фарм: Запретная зона и Арканитовый лабиринт','До 2400 медалей в неделю на персонажа','Стандартный катализатор - 20 штук в месяц по 100'],
   steps:[S('x_cur_med','Что это','Награда за боевые заслуги: Запретная зона и Арканитовый лабиринт.'),
    S('x_med_1','Что купить','Ларец с клише 700 и ларец с клише II 1500 (по 4/мес), арканитовый медальон 200, <b>мощный катализатор 500</b> (4/мес), <b>эскиз +12 (ур. 80) - 700</b> (2/мес).'),
-   S('x_med_3','Дальше по списку','<b>Стандартный катализатор 100</b> (20/мес), мешочек уникальной гравировки 500 (1/мес), огромный набор деталей, ревитализирующая капсула, эликсир изобилия, ордера, арканитовое веретено 140. Скин «Полёт кометы» и Титан-М3 - по 20 000.','','Эскиз +12 за 700 медалей - выгоднее, чем за 2000 жетонов флотилии.')]},
+   S('x_med_3','Дальше по списку','<b>Стандартный катализатор 100</b> (20/мес), мешочек уникальной гравировки 500 (1/мес), огромный набор деталей, ревитализирующая капсула, эликсир изобилия, ордера, арканитовое веретено 140. <a href="#itembook/360983">Полет кометы</a> и <a href="#itembook/361229">Титан-М3</a> стоят по 20 000 медалей. Для Титана-М3 требуется участие в бою «Легат/Дивизион А».','','Эскиз +12 за 700 медалей - выгоднее, чем за 2000 жетонов флотилии.')]},
+ {id:'cur_gift',name:'Подарочные карты',who:'Магазин → Обмен → Подарочные карты',must:[],
+  steps:[S(null,'Где взять валюту','<a href="#itembook/361323">Универсальная подарочная карта</a> выпадает в категории «Транспорт и скакуны» в «Желаниях».'),
+   S(null,'Расцветки транспорта','По одной карте: <a href="#itembook/361210">Розовый кролик</a> и <a href="#itembook/361211">Хаки</a>. По две карты: <a href="#itembook/361214">На гребне волны</a>, <a href="#itembook/361221">Пляжный драйв</a>, <a href="#itembook/361216">Алый демон</a>, <a href="#itembook/361215">Желтый шершень</a>, <a href="#itembook/361222">Розовый бум</a>. Каждую расцветку можно купить один раз на учётную запись.'),
+   S(null,'Эскиз закалки +14','<a href="#itembook/361935">Общий эскиз снаряжения +14 (ур. 80)</a> стоит две карты. Закаляет предмет 80-го уровня или ниже до +14. Два эскиза можно использовать для изготовления эскиза пробужденного снаряжения +15. При разборе одного эскиза получишь восемь мощных катализаторов.')] },
  {id:'cur_emb',name:'Эмблемы буревестника',who:'Обмен → Эмблемы буревестника',must:['Догоняют НЕ полученные на прошлой неделе награды','До 5000 в неделю, максимум 20 000 на аккаунте','С 55 уровня'],
   steps:[S('x_emb_1','Что это и что купить','Обмен на награды, которые ты <b>не забрал на прошлой неделе</b> в других режимах: трофеи экспедиций, именные охотничьи ордера ×80 за 150 эмблем, чеканное золото ×5000 за 5, Лоза созидания, Мыслецвет и Осколок алчности по 200, Плод воображения за 9. Доступное количество зависит от пропущенных наград.'),
    S('x_emb_rules1','Где фармить','<b>Экспедиции</b>: соло 30 эмблем, остальные режимы по 60 за прохождение (даже если награды уже взяты). <b>Запретная зона</b>: 3 эмблемы за каждые 2 медали. <b>Арканитовый лабиринт</b>: 1 за 10 медалей. <b>Облачная арена</b>: 3-10 за победу по рангу. Манёвры: 2 / 4 / 8. Дружеская дуэль: 5. Приключения: первое прохождение 3-6. Обитель распада - <b>0</b>.'),
@@ -1713,6 +1779,7 @@ const GR=[
  {name:'Предметы',ic:'g2',gc:'#38bdf8',ids:['itembook','itemupgrade','itemlooks']},
  {name:'Персонаж',ic:'g2',gc:'#a855f7',ids:['gear','gearbook','prayer','calib','temper','arretir','runes','eng','other','nexus','nx_tab','nx_syn','nx_art','nx_alch']},
  {name:'Фарм и деньги',ic:'g3',gc:'#eab308',ids:['energy','twinks','fleet','currency','cards','money','shop','week']},
+ {name:'Инструменты',ic:'g2',gc:'#587889',ids:['calculators']},
  {name:'Экспедиции',ic:'g0',gc:'#ef4444',ids:['basics','checkmate','queen','capsule','capsule2','lair','beast','beastkr','depth','prison','liturgy']}];
 const DC={checkmate:'#e0a92e',queen:'#e5484d',depth:'#8b5cf6',prison:'#6366f1',liturgy:'#38bdf8',lair:'#f97316',beast:'#14b8a6',beastkr:'#14b8a6',capsule:'#ec4899',capsule2:'#ec4899',terms:'#60a5fa',start:'#22d3ee',gear:'#c084fc',calib:'#2dd4bf',temper:'#fb923c',arretir:'#f472b6',runes:'#a3e635',eng:'#fbbf24',other:'#38bdf8',energy:'#4ade80',fleet:'#06b6d4',currency:'#facc15',money:'#f59e0b',shop:'#e879f9',week:'#94a3b8',decks:'#f43f5e',nexus:'#a78bfa',nx_tab:'#a78bfa',nx_syn:'#22d3ee',nx_art:'#f59e0b',nx_alch:'#4ade80',twinks:'#34d399',prayer:'#38bdf8'};
 const ALL=[...EXP_E,...EXP_P];
@@ -1822,7 +1889,8 @@ const primaryNav=[
   {name:'Прокачка',ids:['gear','gearbook','calib','temper','arretir','runes','eng','prayer','other']},
   {name:'Экспедиции',ids:GR.find(group=>group.ic==='g0').ids},
   {name:'Нексум',ids:['nexus','nx_tab','nx_syn','nx_art','nx_alch']},
-  {name:'Фарм и обмен',ids:['currency','shop','money','cards','energy','twinks']}
+  {name:'Фарм и обмен',ids:['currency','shop','money','cards','energy','twinks']},
+  {name:'Калькуляторы',ids:['calculators'],pinned:true}
 ];
 const extraNav=[
   {name:'Активности',ids:['fleet','week']}
@@ -1838,7 +1906,11 @@ function renderNav(cur){
     return `<a href="#${id}" class="${active?'on':''}"${active?' aria-current="page"':''}>${page.tab}</a>`;
   };
   setSearchOpen(false);
-  $('#grp').innerHTML=primaryNav.map(group=>`<a href="#${group.ids[0]}" class="${group===primary?'on':''}">${group.name}</a>`).join('');
+  $('#grp').innerHTML=primaryNav.filter(group=>!group.pinned).map(group=>`<a href="#${group.ids[0]}" class="${group===primary?'on':''}">${group.name}</a>`).join('');
+  const calculators=$('.nav-calculators');
+  calculators.classList.toggle('on',cur==='calculators');
+  if(cur==='calculators')calculators.setAttribute('aria-current','page');
+  else calculators.removeAttribute('aria-current');
   const more=$('#nav-more');
   more.open=false;
   more.classList.toggle('on',Boolean(secondary));
@@ -1850,13 +1922,6 @@ function renderNav(cur){
   const selected=sub.querySelector('[aria-current="page"]');
   $('#article-current').textContent=selected?.textContent||'Статьи';
   $('#article-menu').open=!compactNav.matches;
-  const tabs=$('#grp');
-  const current=tabs.querySelector('.on');
-  if(current){
-    const rail=tabs.getBoundingClientRect(), item=current.getBoundingClientRect();
-    if(item.right>rail.right)tabs.scrollLeft+=item.right-rail.right;
-    else if(item.left<rail.left)tabs.scrollLeft-=rail.left-item.left;
-  }
 }
 let CM=null;
 function wireComments(){
@@ -1881,6 +1946,8 @@ const XL=[
 ['eng','гравировк[а-яё]*','b-e'],
 ['prayer','молитв[а-яё]*','b-pr_how'],
 ['temper','закалк[а-яё]*','b-t1'],
+['temper','напылени[а-яё]*','b-t-spray'],
+['currency','подарочн[а-яё]* карт[а-яё]*','b-cur_gift'],
 ['calib','калибровк[а-яё]*','b-c'],
 ['other','колод[а-яё]*','b-deck'],
 ['other','питомц[а-яё]*|энграмм[а-яё]*','b-pet'],
@@ -1972,7 +2039,7 @@ function linkGuideTerms(page){
     if(label) (label.closest('.tb')||label).id=target.id;
   }
   const walk=document.createTreeWalker(document.querySelector('#view'),NodeFilter.SHOW_TEXT,{
-    acceptNode:node=>node.parentElement?.closest('a,button,h2,h3,cite,.tn,.pager,script,style')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT
+    acceptNode:node=>node.parentElement?.closest('a,button,h2,h3,cite,.tn,.pager,.wiki-outline,script,style')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT
   });
   const nodes=[];
   while(walk.nextNode())nodes.push(walk.currentNode);
@@ -1984,7 +2051,7 @@ function linkGuideTerms(page){
     for(const match of matches){
       const target=termForms.get(termKey(match[0]));
       if(target.page.startsWith('nx_')&&!['nexus','nx_tab','nx_syn','nx_art','nx_alch'].includes(page))continue;
-      if(target.page===page && node.parentElement?.closest('[id]')?.id===target.id)continue;
+      if(target.page===page)continue;
       fragment.append(node.nodeValue.slice(offset,match.index));
       const a=document.createElement('a');
       a.className='guide-term';
@@ -1994,8 +2061,10 @@ function linkGuideTerms(page){
       fragment.append(a);
       offset=match.index+match[0].length;
     }
-    fragment.append(node.nodeValue.slice(offset));
-    node.replaceWith(fragment);
+    if(offset){
+      fragment.append(node.nodeValue.slice(offset));
+      node.replaceWith(fragment);
+    }
   }
 }
 function xlink(cur){
@@ -2003,7 +2072,7 @@ function xlink(cur){
   if(!document.getElementById('xlcss')){const st=document.createElement('style');st.id='xlcss';st.textContent='.xl{text-decoration:underline dotted;text-underline-offset:3px;color:inherit;cursor:pointer}.xl:hover{color:var(--dc,#7dd3fc)}';document.head.appendChild(st);}
   const SKIP={energy:['beast','beastkr'],terms:['fleet']};
   const inNexum=['nexus','nx_tab','nx_syn','nx_art','nx_alch'].includes(cur);
-  const parts=XL.filter(x=>(x[0]!==cur||x[2])&&!(SKIP[x[0]]||[]).includes(cur)&&
+  const parts=XL.filter(x=>x[0]!==cur&&!(SKIP[x[0]]||[]).includes(cur)&&
     (x[2]!=='s-nx_run-1'||inNexum)&&EXP.some(e=>e.id===x[0]))
     .sort((a,b)=>Number(b[1].includes(' '))-Number(a[1].includes(' ')));
   if(!parts.length)return;
@@ -2019,7 +2088,7 @@ function xlink(cur){
       while((m=big.exec(t))){
         if(m[0].length>2&&m[0]===m[0].toUpperCase())continue;
         const hit=res.find(r=>r[1].test(m[0]));
-        if(!hit||(hit[0]===cur&&hit[2]&&n.parentElement.closest('[id]')?.id===hit[2]))continue;
+        if(!hit)continue;
         if(!frag)frag=document.createDocumentFragment();
         frag.appendChild(document.createTextNode(t.slice(last,m.index)));
         const a=document.createElement('a');a.className='xl';a.href='#'+hit[0]+(hit[2]?'/'+hit[2]:'');a.title='Открыть раздел: '+ttl(hit[0]);a.textContent=m[0];
@@ -2086,15 +2155,18 @@ function renderGallery(view,id){
 }
 function render(id){
   const e=EXP.find(x=>x.id===id)||EXP[0]; K=e.kind||''; const v=$('#view'); if(DC[e.id]){v.style.setProperty('--dc',DC[e.id]);v.classList.add('dcv');}else{v.classList.remove('dcv');}
+  $('#article-menu-pane .wiki-outline')?.remove();
+  const articleMenu=$('#article-menu');
+  if(v.contains(articleMenu))$('#article-menu-home').append(articleMenu);
   renderNav(e.id);
   if(e.tpl){$('#view').innerHTML='';$('#view').appendChild($('#'+e.tpl).content.cloneNode(true));}
   else{
     const leads=e.lead.split('\n\n').map(text=>`<p class="lead">${text}</p>`).join('');
     let h=`<h2>${e.title}</h2><div class="meta">${e.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div>${leads}`;
-    if(K!=='p'||e.bosses.length>1||e.id==='classes'){
+    if(e.bosses.length){
       const outlineTitle=K==='p'?'На этой странице':'Порядок боссов';
       const links=e.bosses.map(b=>`<li><a href="#${e.id}/b-${b.id}">${b.name}</a></li>`).join('');
-      h+=`<details class="wiki-outline"${compactRead.matches?'':' open'}><summary>${outlineTitle}</summary><nav aria-label="${outlineTitle}"><ul>${links}</ul></nav></details>`;
+      h+=`<details class="wiki-outline" open><summary>${outlineTitle}</summary><nav aria-label="${outlineTitle}"><ul>${links}</ul></nav></details>`;
     }
     if(e.intro) h+=`<div class="steps" style="margin-bottom:14px">${stepHTML(S(e.intro.img,e.intro.cap,e.flowNote||'Схема боя. Нажми на скрин, чтобы увеличить.'),'★')}</div>`;
     if(e.table) h+=`<div class="tbl"><table>${e.table.map((r,i)=>`<tr>${r.map(c=>i?`<td>${c}</td>`:`<th>${c}</th>`).join('')}</tr>`).join('')}</table></div>`;
@@ -2140,11 +2212,9 @@ function render(id){
     }
     toolbar.append(tools);
     const frontMatter=v.querySelectorAll(':scope > :is(.meta,.lead)');
-    const outline=v.querySelector(':scope > .wiki-outline');
     heading.before(hero);
     intro.append(toolbar,heading,...frontMatter);
     hero.append(intro);
-    if(outline)hero.append(outline);
   }
   const i=EXP.indexOf(e), prev=EXP[i-1], next=EXP[i+1];
   const pg=document.createElement('div');pg.className='pager';
@@ -2155,12 +2225,38 @@ function render(id){
   linkGuideTerms(e.id);
   addGuideIcons(v);
   renderGallery(v,e.id);
-  xlink(id);
+  xlink(e.id);
+  removeArticleSelfLinks(v,e.id);
   prepareTables(v);
   wireComments();
   if(e.id==='skillbook')mountSkillBook(v,classCatalog);
+  if(e.id==='calculators')mountWikiCalculators(v);
   if(e.id==='gearbook')mountGearBook(v,classCatalog);
+  mountSectionNavigation();
   if(e.tpl==='t-itembook')mountItemBook(v,classCatalog,e.id);
+}
+function mountSectionNavigation(){
+  const layout=$('#wiki-layout');
+  const rail=$('#wiki-rail');
+  const articleMenu=$('#article-menu');
+  const catalogSidebar=$('#view .item-book-sidebar');
+  const pane=$('#article-menu-pane');
+  const outline=$('#view > .wiki-outline');
+  const wide=!compactNav.matches;
+  const useRail=wide&&!catalogSidebar;
+  if(wide)(catalogSidebar||rail).prepend(articleMenu);
+  else $('#article-menu-home').append(articleMenu);
+  if(outline)pane.append(outline);
+  articleMenu.open=wide;
+  rail.hidden=!useRail;
+  layout.classList.toggle('has-wiki-rail',useRail);
+}
+function removeArticleSelfLinks(view,page){
+  for(const link of view.querySelectorAll('a[href^="#"]')){
+    if(link.hash.slice(1).split('/')[0]!==page)continue;
+    if(link.closest('nav,.wiki-outline,.wiki-intro-top'))continue;
+    link.replaceWith(...link.childNodes);
+  }
 }
 function prepareTables(view){
   for(const table of view.querySelectorAll('.tbl table')){
@@ -2190,14 +2286,10 @@ function prepareTables(view){
     }
   }
 }
-const compactNav=matchMedia('(max-width:900px)');
+const compactNav=matchMedia('(max-width:720px)');
 const compactRead=matchMedia('(max-width:760px)');
-compactNav.addEventListener('change',()=>{$('#article-menu').open=!compactNav.matches;setSearchOpen(false);});
-compactRead.addEventListener('change',()=>{
-  const outline=$('.wiki-outline');
-  if(outline)outline.open=!compactRead.matches;
-  setScreenshotZoom(false);
-});
+compactNav.addEventListener('change',()=>{mountSectionNavigation();setSearchOpen(false);});
+compactRead.addEventListener('change',()=>setScreenshotZoom(false));
 const lightbox=$('#lb');
 const zoomButton=$('#lbzoom');
 const shotWindow=lightbox.querySelector('.shot-window');
@@ -2274,8 +2366,19 @@ function route(){
     return;
   }
   render(id);
-  if(GOTO||anchor){const t=document.getElementById(GOTO||anchor);GOTO=null;if(t){const details=t.closest('details');if(details)details.open=true;t.scrollIntoView({block:'start'});t.classList.remove('hit');void t.offsetWidth;t.classList.add('hit');return;}}
-  window.scrollTo(0,0); }
+  const target=document.getElementById(GOTO||anchor||'');
+  GOTO=null;
+  if(target)scrollToArticleTarget(target);
+  else window.scrollTo(0,0);
+}
+function scrollToArticleTarget(target){
+  const details=target.closest('details');
+  if(details)details.open=true;
+  target.scrollIntoView({block:'start'});
+  target.classList.remove('hit');
+  void target.offsetWidth;
+  target.classList.add('hit');
+}
 /* ---------- search ---------- */
 const strip=h=>String(h||'').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();
 const norm=t=>t.toLowerCase().replace(/ё/g,'е');
@@ -2317,13 +2420,27 @@ document.addEventListener('click',e=>{
 document.addEventListener('keydown',e=>{
   const more=$('#nav-more');
   if(e.key==='Escape'&&more.open){more.open=false;more.querySelector('summary').focus();}
+  else if(e.key==='Escape'&&compactNav.matches&&$('#article-menu').open){
+    $('#article-menu').open=false;
+    $('#article-menu > summary').focus();
+  }
 });
 document.body.insertAdjacentHTML('beforeend','<button class="totop" aria-label="Наверх">↑</button>');
 (()=>{const b=document.querySelector('.totop');addEventListener('scroll',()=>b.classList.toggle('show',scrollY>900),{passive:true});b.onclick=()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});})();
 document.addEventListener('click',e=>{
-  if(e.target.closest('#sub a')){
-    $('#q').blur();
-    if(compactNav.matches)$('#article-menu').open=false;
+  if(e.target.closest('#sub a'))$('#q').blur();
+  const local=e.target.closest('#article-menu-pane .wiki-outline a[href^="#"]');
+  if(local&&!e.ctrlKey&&!e.metaKey&&!e.shiftKey&&!e.altKey){
+    const [page,anchor]=local.hash.slice(1).split('/');
+    const target=anchor&&document.getElementById(anchor);
+    if(page===(location.hash||'#terms').slice(1).split('/')[0]&&target?.closest('#view')){
+      e.preventDefault();
+      if(page!=='skillbook'&&location.hash!==local.hash)history.pushState(null,'',local.hash);
+      scrollToArticleTarget(target);
+    }
+  }
+  if(compactNav.matches&&(!e.target.closest('#article-menu')||e.target.closest('#article-menu-pane a'))){
+    $('#article-menu').open=false;
   }
 });
 window.addEventListener('hashchange',route); route();
