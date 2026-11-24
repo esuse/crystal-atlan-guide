@@ -474,9 +474,12 @@ header.top .sub{margin:8px auto 0;font-size:14px}
 .item-book-card>summary img{object-fit:contain;border:1px solid var(--line);border-radius:5px}
 .item-book-title{display:grid;gap:.2rem;min-width:0;overflow-wrap:anywhere}
 .item-book-title small{color:var(--muted);font-weight:400;line-height:1.35}
-.item-book-card:not([open]) .item-book-title{grid-template-rows:2.7em 1.125rem 1.125rem}
 .item-book-card:not([open]) .item-book-name{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
 .item-book-card:not([open]) .item-book-title small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-book-title .item-book-desc{margin:.15rem 0 0;font-size:.84rem;font-weight:400;line-height:1.4;color:var(--muted);white-space:pre-line}
+.item-book-card:not([open]) .item-book-desc{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}
+.item-book-flat>summary::after{display:none}
+.item-book-flat>summary{cursor:default}
 #item-book-more[hidden]{display:none}
 .item-book-card .nx-choice-body>a{display:block;margin-top:.5rem;font-size:.875rem}
 .item-reward-link{font-weight:700;color:var(--accent);text-decoration:underline;text-underline-offset:.18em}
@@ -2228,7 +2231,7 @@ function render(id){
   const group=GR.find(category=>category.ids.includes(e.id));
   const accents={'g0':'#9c6353','g1':'#587889','g2':'#74719b','g3':'#9b7b42'};
   v.style.setProperty('--article-accent',accents[group?.ic]||'#587889');
-  const heading=v.querySelector('h2');
+  const heading=v.querySelector('.item-book-main h1')||v.querySelector('h2');
   if(heading){
     const tools=document.createElement('div');
     tools.className='wiki-tools';

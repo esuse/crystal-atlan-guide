@@ -9,6 +9,7 @@ const itemCategories={
   collection:'Коллекция',book:'Книги и записки',other:'Прочие'
 };
 const repeatedLooks=new Set([319424, 319425, 361616, 361617, 361618, 361783, 362167]);
+const itemIconOverrides=new Map([[360027,'items/10026.webp'],[360028,'items/10045.webp']]);
 const lookCategories=new Set(["avatar", "collection", "emote", "frame", "outfit", "record", "sticker", "title", "transport"]);
 const itemShortlists={
   itemupgrade:{
@@ -116,7 +117,10 @@ function itemBookWays(source,details,packs){
   return result;
 }
 
-function itemBookCard([id,name,type,description,icon,tags,destination,portraits,source,rewards,offers,details],classNames,packs){
+function itemBookCard(row,classNames,packs){
+  let [id,name,type,description,icon,tags,destination,portraits,source,rewards,offers,details]=row;
+  icon=itemIconOverrides.get(id)||icon;
+  const namedPacks=packs?.filter(([,packTitle])=>packTitle!==name);
   const card=gearNode('details',null,'nx-choice item-book-card');
   card.id='item-'+id;
   const summary=gearNode('summary');
@@ -124,14 +128,18 @@ function itemBookCard([id,name,type,description,icon,tags,destination,portraits,
   title.append(gearNode('span',name,'item-book-name'),gearNode('small',tags||itemCategories[type]));
   if(source)title.append(gearNode('small','Где взять: '+source[0],'item-book-source'));
   else if(offers?.length)title.append(gearNode('small','Обмен: '+offers[0][2],'item-book-source'));
-  else if(details?.ways?.length||packs?.length)title.append(gearNode('small','Где взять: '+(details?.ways?.[0]?.[1]||packs[0][1]),'item-book-source'));
+  else if(details?.ways?.length||namedPacks?.length)title.append(gearNode('small','Где взять: '+(details?.ways?.[0]?.[1]||namedPacks[0][1]),'item-book-source'));
   else if(lookCategories.has(type))title.append(gearNode('small','Где взять: источник не подтверждён','item-book-source'));
+  if(description){
+    const text=itemBookDescription(description,rewards);
+    text.classList.add('item-book-desc');
+    title.append(text);
+  }
   const preview=portraits?.[0][0]||icon;
   if(preview)summary.append(itemBookImage(preview,44));
   else summary.classList.add('without-item-icon');
   summary.append(title);
   const body=gearNode('div',null,'nx-choice-body');
-  if(description)body.append(itemBookDescription(description,rewards));
   if(offers?.length)body.append(itemBookTrade(offers));
   if(portraits){
     const gallery=gearNode('div',null,'item-book-portraits');
@@ -150,6 +158,7 @@ function itemBookCard([id,name,type,description,icon,tags,destination,portraits,
   }
   if(source||details||packs?.length)body.append(itemBookWays(source,details,packs));
   if(destination)body.append(skillBookLink('Открыть в снаряжении',destination));
+  if(!body.childNodes.length)card.classList.add('item-book-flat');
   card.append(summary,body);
   return card;
 }
@@ -184,6 +193,13 @@ function mountItemBook(view,catalog,page){
     }).catch(error=>{itemBookRequest=null;throw error;});
   }
   itemBookRequest.then(data=>{
+    const seenRows=new Set();
+    data=data.filter(row=>{
+      const key=JSON.stringify(row.slice(1));
+      if(seenRows.has(key))return false;
+      seenRows.add(key);
+      return true;
+    });
     const rows=shortlist?data.filter(shortlist.includes):data.slice();
     if(!list.isConnected)return;
     const groups=new Map();
@@ -202,7 +218,7 @@ function mountItemBook(view,catalog,page){
       for(const [,reward] of row[9]||[]){
         if(!rewardPacks.has(reward))rewardPacks.set(reward,[]);
         const packs=rewardPacks.get(reward);
-        if(!packs.some(([id])=>id===row[0]))packs.push([row[0],row[1]]);
+        if(!packs.some(([packId,packTitle])=>packId===row[0]||packTitle===row[1]))packs.push([row[0],row[1]]);
       }
     }
     let active=selected?.[2]||'';
