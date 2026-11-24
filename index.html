@@ -605,8 +605,14 @@ nav.tabs :is(a,summary,button):focus-visible{outline:2px solid var(--accent);out
 .article-navigation a:is(:hover,.on){background:var(--accent-soft);color:var(--fg)}
 .article-navigation a.on{box-shadow:inset 0 -2px var(--masthead-accent)}
 #view .wiki-hero{padding-block:16px 24px}
-@media(min-width:901px){
+@media(min-width:901px) and (max-width:1279px){
   .masthead nav.tabs{grid-template-columns:minmax(0,1fr) minmax(170px,250px) auto;grid-template-areas:"brand search tools" "nav nav nav";gap:0 10px;padding-inline:14px}
+}
+@media(min-width:1280px){
+  .masthead nav.tabs{grid-template-columns:auto minmax(0,1fr) minmax(140px,200px) auto;grid-template-areas:"brand nav search tools";gap:0 8px;padding-inline:14px}
+  nav.tabs .grp a,nav.tabs .nav-calculators,#nav-more summary{padding-inline:8px}
+}
+@media(min-width:901px){
   .masthead .wiki-brand{grid-area:brand}
   .masthead .search{grid-area:search}
   .masthead .nav-tools{grid-area:tools}
